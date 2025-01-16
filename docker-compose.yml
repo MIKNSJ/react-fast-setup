@@ -1,0 +1,38 @@
+name: react-fast-setup
+
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: React
+    ports:
+      - 5173:5173
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: FastAPI
+    ports:
+      - 8080:8080
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - database
+
+        
+  database:
+    image: mongo
+    container_name: MongoDB
+    ports:
+      - 27017:27017
+    volumes:
+      - ./mongo:/data/db

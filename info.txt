@@ -1,0 +1,27 @@
+You must add "host: "0.0.0.0" in the Vite config so that the address of the
+Docker container and the Vite application does not conflict. This is because
+Docker is like its own OS whether you are running in on Windows, WSL, or MAC.
+You may see online that people used "host: true" as well as other commands but
+this did not work for me.
+
+You may notice that the mongo service quite frequently outputs logs in Docker.
+A potential workaround is to create a mongod.conf file with verbosity: 0
+locally and then create another Dockerfile, for the database, to mount on the
+docker-compose. However, I do not know if this works as I did not try but
+supposely found from the official documentation. On the other hand, you can
+just use Docker Desktop as it automatically separates logs between each runnin
+service. This can be accomplished by building the docker-compose file in the
+terminal first and then running it on Docker Desktop.
+
+You may notice that you cannot stop the running docker instance while being in
+the terminal. To fix this, open a new terminal instance to input docker
+commands, start docker containers in internative mode, or use Docker Desktop.
+
+Please note that he node version imported for Docker is important as older
+verisons may not support React Router v7 and/or Vite applications.
+
+For this template, I will not be using .venv along with Docker.
+
+If your Docker container is not behaving properly or you made numerous builds,
+then run docker system prune --all --volumes to free up storage and to reset
+images.
